@@ -1,5 +1,6 @@
 # Docker Compose file for monitoring stack with Nginx, Prometheus, Grafana, Loki, and cAdvisor
-# Put this file under a folder and use `docker-compose up -d` to start the services.
+# Put this file under a folder and use `docker-compose up -d` to pull the images, build a container from them and start runing..
+
 version: '3.8'
 services:
   nginx:

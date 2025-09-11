@@ -1,3 +1,5 @@
+# Learning-Kubernetes/nginx-deployment.yml
+# Put this file under a folder and use `kubectl apply -f nginx-deployment.yml` to create the deployment and service.
 apiVersion: apps/v1
 kind: Deployment
 metadata:

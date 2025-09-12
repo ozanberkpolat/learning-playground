@@ -5,6 +5,7 @@ This guide shows how to deploy Prometheus, Grafana, and 5 NGINX pods (via a Repl
 ---
 
 ## Step 1: Clean Up Old Resources
+
 Delete any old Prometheus, Grafana, or other resources:
 
 ```powershell
@@ -16,6 +17,7 @@ kubectl delete namespace nginx-demo
 ---
 
 ## Step 2: Deploy Prometheus + Grafana
+
 We use the **kube-prometheus-stack** Helm chart, which includes Prometheus, Grafana, and exporters.
 
 ```powershell
@@ -35,6 +37,7 @@ kubectl create namespace nginx-demo
 ---
 
 ## Step 4: Deploy 5 NGINX Pods via a ReplicaSet
+
 Create a file named `nginx-replicaset.yaml`:
 
 ```yaml
@@ -95,6 +98,7 @@ kubectl get pods -n nginx-demo
 ---
 
 ## Step 5: Deploy a Load Generator Pod
+
 Create a file named `load-generator.yaml`:
 
 ```yaml
@@ -128,18 +132,20 @@ kubectl logs -f load-generator -n nginx-demo
 ---
 
 ## Step 6: Access Grafana
+
 Expose Grafana with:
 
 ```powershell
 minikube service monitoring-grafana
 ```
 
-- **Username:** `admin`
-- **Password:** `prom-operator` (default, unless changed)
+* **Username:** `admin`
+* **Password:** `prom-operator` (default, unless changed)
 
 ---
 
 ## Step 7: Monitor NGINX Namespace
+
 1. Open Grafana in your browser.
 2. Go to **Dashboards → Manage**.
 3. Open the **Kubernetes / Compute Resources / Namespace (Pods)** dashboard.
@@ -150,12 +156,12 @@ minikube service monitoring-grafana
 ---
 
 ### Notes
-- You can scale the ReplicaSet manually:
+
+* You can scale the ReplicaSet manually:
 
 ```powershell
 kubectl scale rs nginx-replicaset --replicas=10 -n nginx-demo
 ```
 
-- The load generator continuously sends requests to NGINX, so you can see the metrics updating in Grafana.
-- This setup keeps NGINX pods isolated in their own namespace for easier monitoring.
-
+* The load generator continuously sends requests to NGINX, so you can see the metrics updating in Grafana.
+* This setup keeps NGINX pods isolated in their own namespace for easier monitoring.

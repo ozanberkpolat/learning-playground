@@ -1,0 +1,5 @@
+kubectl apply -f deployment.yaml
+minikube addons enable ingress
+minikube tunnel
+
+go to -> obp.nginx.local

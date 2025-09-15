@@ -1,0 +1,32 @@
+# Namespace where the demo will be installed/created
+namespace: hpa-demo
+
+# App settings
+app:
+  name: cpu-app
+  image: python:3.11-slim
+  replicas: 1
+  containerPort: 8080
+  # default cpu resources for request/limit (HPA will scale based on CPU utilization)
+  resources:
+    requests:
+      cpu: 50m
+    limits:
+      cpu: 100m
+
+# HPA settings
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+
+# Load generator settings (a busybox-like loop performing continuous requests)
+loadGenerator:
+  enabled: true
+  name: load-generator
+  image: busybox
+  # how often to call (in seconds)
+  sleepSeconds: 0.1
+  # the query param controlling work done by the cpu app (higher => more CPU)
+  nParam: 120000

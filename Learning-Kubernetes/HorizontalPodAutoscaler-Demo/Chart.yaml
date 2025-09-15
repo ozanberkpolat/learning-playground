@@ -1,0 +1,6 @@
+apiVersion: v2
+name: hpa-demo
+description: HPA autoscaling demo (CPU-intensive app + load generator) for Minikube
+type: application
+version: 0.1.0
+appVersion: "1.0"

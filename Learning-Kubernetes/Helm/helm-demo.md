@@ -131,22 +131,34 @@ kubectl logs -f load-generator -n nginx-demo
 
 ---
 
-## Step 6: Access Grafana
+## Step 6: Access Grafana, Prometheus & Alertmanager
 
-Expose Grafana with:
-
+### Grafana
 ```powershell
-minikube service monitoring-grafana
+kubectl port-forward svc/monitoring-grafana 3000:80
 ```
+- Open [http://localhost:3000](http://localhost:3000)  
+- **Username:** `admin`  
+- **Password:** `prom-operator` (default, unless changed)  
 
-* **Username:** `admin`
-* **Password:** `prom-operator` (default, unless changed)
+### Prometheus
+```powershell
+kubectl port-forward svc/monitoring-kube-prometheus-prometheus 9090:9090
+```
+- Open [http://localhost:9090](http://localhost:9090)  
+- Check **Targets** to verify if kubelet and cadvisor are being scraped.  
+
+### Alertmanager
+```powershell
+kubectl port-forward svc/monitoring-kube-prometheus-alertmanager 9093:9093
+```
+- Open [http://localhost:9093](http://localhost:9093)  
 
 ---
 
 ## Step 7: Monitor NGINX Namespace
 
-1. Open Grafana in your browser.
+1. Open Grafana in your browser (`http://localhost:3000`).
 2. Go to **Dashboards → Manage**.
 3. Open the **Kubernetes / Compute Resources / Namespace (Pods)** dashboard.
 4. Select **Namespace: `nginx-demo`** from the dropdown.
@@ -165,3 +177,4 @@ kubectl scale rs nginx-replicaset --replicas=10 -n nginx-demo
 
 * The load generator continuously sends requests to NGINX, so you can see the metrics updating in Grafana.
 * This setup keeps NGINX pods isolated in their own namespace for easier monitoring.
+

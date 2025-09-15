@@ -1,0 +1,22 @@
+{{- if .Values.loadGenerator.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.loadGenerator.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.loadGenerator.name }}
+spec:
+  restartPolicy: Never
+  containers:
+    - name: loadgen
+      image: {{ .Values.loadGenerator.image }}
+      command:
+        - /bin/sh
+        - -c
+        - |
+          while true; do
+            wget -q -O- http://{{ .Values.app.name }}.{{ .Values.namespace }}.svc.cluster.local/?n={{ .Values.loadGenerator.nParam }} >/dev/null 2>&1 || true
+            sleep {{ .Values.loadGenerator.sleepSeconds }}
+          done
+{{- end }}

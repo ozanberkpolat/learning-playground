@@ -29,4 +29,4 @@ loadGenerator:
   # how often to call (in seconds)
   sleepSeconds: 0.1
   # the query param controlling work done by the cpu app (higher => more CPU)
-  nParam: 120000
+  nParam: 180000

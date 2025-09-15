@@ -1,4 +1,4 @@
-# Learning Cloud & Container Orchestration
+# Learning Playground
 
 This repository contains hands-on experiments and configurations for learning **Docker Compose**, **Kubernetes**, and **Helm**. It serves as a personal playground to practice containerization, orchestration, and deployment strategies.
 

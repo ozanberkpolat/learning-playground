@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-v2
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.app.name }}
+    version: v2
+spec:
+  replicas: {{ .Values.v2.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+        version: v2
+    spec:
+      containers:
+        - name: {{ .Values.app.name }}
+          image: {{ .Values.v2.image }}
+          ports:
+            - containerPort: {{ .Values.app.containerPort }}
+          resources:
+            requests:
+              cpu: {{ .Values.app.resources.requests.cpu }}
+            limits:
+              cpu: {{ .Values.app.resources.limits.cpu }}
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              set -e
+              pip install --no-cache-dir flask >/dev/null 2>&1 || true
+              mkdir -p /app
+              cat > /app/app.py <<'PY'
+              from flask import Flask, request
+              app = Flask(__name__)
+
+              @app.route('/')
+              def do_work():
+                  try:
+                      n = int(request.args.get('n', '20000'))
+                  except:
+                      n = 20000
+                  a = 0
+                  for i in range(n):
+                      a += i
+                  return "ok - version v2\n"
+
+              if __name__ == '__main__':
+                  app.run(host='0.0.0.0', port=8080)
+              PY
+              python /app/app.py

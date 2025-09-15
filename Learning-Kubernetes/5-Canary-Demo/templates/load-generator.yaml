@@ -1,0 +1,24 @@
+{{- if .Values.loadGenerator.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.loadGenerator.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.loadGenerator.name }}
+spec:
+  restartPolicy: Never
+  containers:
+    - name: loadgen
+      image: {{ .Values.loadGenerator.image }}
+      command:
+        - /bin/sh
+        - -c
+      args:
+        - |
+          while true; do
+            # Send request and print which backend version responded
+            curl -s http://backend.{{ .Values.namespace }}.svc.cluster.local/
+            sleep {{ .Values.loadGenerator.interval }}
+          done
+{{- end }}

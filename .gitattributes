@@ -1,5 +1,5 @@
-echo "*.yaml linguist-language=YAML" >> .gitattributes
-echo "*.yml  linguist-language=YAML" >> .gitattributes
-echo "charts/** linguist-language=YAML" >> .gitattributes
-echo "templates/** linguist-language=YAML" >> .gitattributes
-echo "*.lock linguist-detectable=false" >> .gitattributes
+*.yaml linguist-language=YAML
+*.yml  linguist-language=YAML
+charts/** linguist-language=YAML
+templates/** linguist-language=YAML
+*.lock linguist-detectable=false

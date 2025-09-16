@@ -1,6 +1,0 @@
-kubectl apply -f deployment.yaml
-add the IP address to hosts file
-minikube addons enable ingress
-minikube tunnel
-
-go to -> obp.nginx.local
